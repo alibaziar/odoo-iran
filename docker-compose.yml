@@ -1,0 +1,26 @@
+version: '3'
+services:
+  odoo:
+    image: nginx:latest   # فقط نمونه؛ بعد به custom image تغییر می‌دیم
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    volumes:
+      - odoo-data:/var/lib/odoo
+      - ./addons:/mnt/extra-addons
+
+  db:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_DB: odoo
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: secure_pass_here
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  odoo-data:
+  db-data:

@@ -1,0 +1,9 @@
+app: odoo-iran
+type: docker
+docker:
+  image: odoo-iran:latest
+  port: 8069
+disks:
+  - name: odoo-data
+    size: 10
+    mountTo: /var/lib/odoo
