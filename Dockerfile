@@ -1,10 +1,12 @@
-FROM odoo:18.0
+FROM odoo:18
 
-# کپی کردن ماژول‌های ایرانی به پوشه addons
+USER root
+RUN pip3 install --upgrade pip && pip3 install -r /mnt/extra-addons/requirements.txt || true
+
+# کپی ماژول‌های محلی
 COPY ./addons /mnt/extra-addons
 
-# نصب احتمالی پکیج‌ها (اگر نیاز داری)
-# RUN pip install -r /mnt/extra-addons/requirements.txt || true
+# تنظیمات odoo.conf
+COPY ./odoo.conf /etc/odoo/odoo.conf
 
-# باز کردن پورت پیش‌فرض اودو
-EXPOSE 8069
+USER odoo
